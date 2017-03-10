@@ -1,4 +1,4 @@
-package io.tastypenguinbacon.cheat;
+package com.github.tastypenguinbacon.cheat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
