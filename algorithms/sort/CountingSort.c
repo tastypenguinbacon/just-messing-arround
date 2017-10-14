@@ -31,15 +31,13 @@ int main(int argc, char *argv[]) {
     const int number_count = argc - 1;
     int *table = malloc(sizeof(int) * number_count);
 
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++) 
         table[i] = atoi(argv[i + 1]);
-    }
 
     counting_sort(table, table + number_count);
 
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++)
         printf("%d ", table[i]);
-    }
     putchar('\n');
 
     free(table);

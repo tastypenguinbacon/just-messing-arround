@@ -37,16 +37,15 @@ void merge_sort(int *begin, int *end) {
 int main(int argc, char* argv[]) {
     const int number_count = argc - 1;
     int *numbers = malloc(sizeof(int) * number_count);
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++)
         numbers[i] = atoi(argv[i + 1]);
-    }
 
     merge_sort(numbers, numbers + number_count);
 
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++)
         printf("%d ", numbers[i]);
-    }
     putchar('\n');
+
     free(numbers);
     return 0;
 }

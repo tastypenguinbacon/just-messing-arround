@@ -6,10 +6,10 @@ typedef enum {
     True
 } bool;
 
-static void swap(int *begin, int *end) {
-    int c = *begin;
-    *begin = *end;
-    *end = c;
+void swap(int *a, int *b) {
+    int c = *a;
+    *a = *b;
+    *b = c;
 }
 
 void bubble_sort(int *begin, int* end) {
@@ -29,15 +29,13 @@ int main(int argc, char *argv[]) {
     const int number_count = argc - 1;
     int *table = malloc(sizeof(int) * number_count);
 
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++)
         table[i] = atoi(argv[i + 1]);
-    }
 
     bubble_sort(table, table + number_count);
 
-    for (int i = 0; i < number_count; i++) {
+    for (int i = 0; i < number_count; i++)
         printf("%d ", table[i]);
-    }
     putchar('\n');
 
     free(table);
