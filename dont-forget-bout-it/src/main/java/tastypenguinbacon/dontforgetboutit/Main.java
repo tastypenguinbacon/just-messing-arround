@@ -1,6 +1,4 @@
-package io.github.tastypenguinbacon.dontforgetboutit;
-
-import java.util.Arrays;
+package tastypenguinbacon.dontforgetboutit;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ApplicationPath;
