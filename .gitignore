@@ -18,3 +18,4 @@ out
 *swp
 node_modules
 deployment
+!/dont-forget-bout-it/dont-forget-bout-it-core/src/main/java/tastypenguinbacon/dontforgetboutit/remember/RememberUrlDTO.java

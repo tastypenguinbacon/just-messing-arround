@@ -1,0 +1,3 @@
+<jboss-web>
+    <context-root>/dfbi</context-root>
+</jboss-web>
