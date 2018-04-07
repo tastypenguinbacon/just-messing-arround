@@ -31,13 +31,11 @@ public class Users {
     }
 
     @RequestMapping(value = "{userId}", method = RequestMethod.GET)
-    public UserDTO getUserInformation(
-            @PathVariable("userId") String userId) {
+    public UserDTO getUserInformation(@PathVariable("userId") String userId) {
         return null;
     }
 
     @RequestMapping(value = "{userId}", method = RequestMethod.DELETE)
-    public void deleteUser(
-            @PathVariable("userId") String userId) {
+    public void deleteUser(@PathVariable("userId") String userId) {
     }
 }
