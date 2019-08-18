@@ -22,21 +22,17 @@
     height: 100%;
 }
 
-.wall, .corridor, .considered {
+.dead, .alive {
     border: 0.5px black;
     border-style: solid;
     width: 100%;
     height: 100%;
 }
 
-.wall {
-    background-color: lightgreen;
-}
-
-.corridor {
+.dead {
     background-color: black;
 }
 
-.considered {
-    background-color: lightcoral;
+.alive {
+    background-color: white;
 }

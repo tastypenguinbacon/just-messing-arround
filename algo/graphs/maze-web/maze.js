@@ -1,5 +1,5 @@
-ROW_CNT = 40
-COL_CNT = 50
+ROW_CNT = 100
+COL_CNT = 150
 
 function* neighboursOfCell({row, col}) {
     for (let i = -1; i <= 1; i++) {
@@ -49,7 +49,10 @@ function getBehindWall(cell, wall) {
 }
 
 
-const startingCell = {row: 1, col: 1}
+const startingCell = {
+    row: (ROW_CNT - ROW_CNT % 2) / 2,
+    col: (COL_CNT - COL_CNT % 2) / 2
+}
 
 const walls = Array.from(_.map([...neighboursOfCell(startingCell)], (neighbour) => {
     return {cell: startingCell, wall: neighbour}
