@@ -2,10 +2,11 @@ import React from 'react'
 import './App.css'
 import _ from 'lodash'
 
-function* neighboursOfCell({row, col}) {
+function* neighboursOfCell({row, col}, {rowCnt, colCnt}) {
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-            const temp_row = row + i, temp_col = col + j
+            const temp_row = (row + i + rowCnt) % rowCnt
+            const temp_col = (col + j + colCnt) % colCnt
             if ((i !== 0) || (j !== 0)) {
                 yield {row: temp_row, col: temp_col}
             }
@@ -23,13 +24,13 @@ function nextState(aliveCells, callback) {
             .filter(({row, col}) => aliveCells[row][col])
 
     let neighboursOfAliveCells =
-        aliveCellsAsList.flatMap(aliveCell => [...neighboursOfCell(aliveCell)])
+        aliveCellsAsList.flatMap(aliveCell => [...neighboursOfCell(aliveCell, {rowCnt, colCnt})])
 
     let toConsider = _.uniqBy(_.concat(aliveCells, neighboursOfAliveCells),
         ({row, col}) => row * rowCnt + col)
 
     let aliveNeighbours = toConsider.map(cell => {
-        let aliveNeighbours = [...neighboursOfCell(cell)]
+        let aliveNeighbours = [...neighboursOfCell(cell, {rowCnt, colCnt})]
             .filter(({row, col}) => aliveCells[row] && aliveCells[row][col])
             .length
         return {aliveNeighbours, cell}

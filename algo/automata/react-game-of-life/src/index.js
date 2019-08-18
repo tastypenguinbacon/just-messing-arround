@@ -6,8 +6,8 @@ import * as serviceWorker from './serviceWorker';
 
 const initialState = []
 
-const ROW_CNT = 200
-const COL_CNT = 200
+const ROW_CNT = 150
+const COL_CNT = 150
 
 for (let i = 0; i < ROW_CNT; i++) {
   initialState.push([])
