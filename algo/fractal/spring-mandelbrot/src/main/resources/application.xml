@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+    <context:component-scan base-package="io.tastypenguinbacon.fractal"/>
+    <context:annotation-config/>
+    <context:property-placeholder location="classpath:/application.properties"/>
+
+    <bean class="org.springframework.batch.core.scope.StepScope">
+        <property name="autoProxy" value="false" />
+    </bean>
+
+    <batch:job id="generate-mandelbrot">
+        <batch:step id="mandelbrot-partition" next="concat-files">
+            <batch:partition step="mandelbrot-step"
+                             partitioner="mandelbrotPartitioner">
+                <batch:handler grid-size="20" task-executor="taskExecutor"/>
+            </batch:partition>
+        </batch:step>
+        <batch:step id="concat-files">
+            <batch:tasklet ref="catTasklet"/>
+        </batch:step>
+    </batch:job>
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="queueCapacity" value="25" />
+    </bean>
+
+    <batch:step id="mandelbrot-step">
+        <batch:tasklet>
+            <batch:chunk
+                    commit-interval="1"
+                    reader="imaginaryNumberReader"
+                    processor="mandelbrotTester"
+                    writer="imageWriter"/>
+        </batch:tasklet>
+    </batch:step>
+
+    <bean id="jobLauncher"
+          class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository" />
+    </bean>
+
+    <bean id="jobRepository"
+          class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/>
+</beans>
