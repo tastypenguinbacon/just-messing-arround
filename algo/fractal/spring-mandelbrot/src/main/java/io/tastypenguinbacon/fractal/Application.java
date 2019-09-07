@@ -14,10 +14,11 @@ public class Application {
     private static final String CTXT_LOCATION = "classpath:/application.xml";
 
     public static void main(String[] args) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
-        ClassPathXmlApplicationContext ctxt = new ClassPathXmlApplicationContext(CTXT_LOCATION);
-        Job job = ctxt.getBean("generate-mandelbrot", Job.class);
-        JobLauncher jobLauncher = ctxt.getBean("jobLauncher", JobLauncher.class);
-        JobExecution run = jobLauncher.run(job, new JobParameters());
-        System.out.println(run.getExitStatus().getExitCode());
+        try (ClassPathXmlApplicationContext ctxt = new ClassPathXmlApplicationContext(CTXT_LOCATION)) {
+            Job job = ctxt.getBean("generate-mandelbrot", Job.class);
+            JobLauncher jobLauncher = ctxt.getBean("jobLauncher", JobLauncher.class);
+            JobExecution run = jobLauncher.run(job, new JobParameters());
+            System.out.println(run.getExitStatus().getExitCode());
+        }
     }
 }
