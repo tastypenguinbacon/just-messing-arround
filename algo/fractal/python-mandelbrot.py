@@ -17,7 +17,7 @@ if tan <= 1:
     y_elem_cnt = int(x_elem_cnt * tan)
 else:
     y_elem_cnt = args.sharpness
-    x_elem_cnt = int(x_elem_cnt / tan)
+    x_elem_cnt = int(y_elem_cnt / tan)
 
 
 x = np.linspace(args.minRe, args.maxRe, x_elem_cnt)
