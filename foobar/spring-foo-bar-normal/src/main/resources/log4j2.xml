@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Properties>
+        <Property name="basePath">logs</Property>
+    </Properties>
+    <Appenders>
+        <File name="FILE" fileName="${basePath}/logfile.log" append="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%t] %C{4.} (%F:%L) - %m%n" />
+        </File>
+
+        <File name="SPRING_LOG_FILE" fileName="${basePath}/spring.log" append="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%t] | %C{4.} (%F:%L) - %m%n" />
+        </File>
+
+        <File name="MERGED" fileName="${basePath}/merged.log" append="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} | %-5p | [%t] | %C{4.} (%F:%L) - %m%n" />
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="io.tastypenguinbacon" level="debug">
+            <AppenderRef ref="FILE"/>
+            <AppenderRef ref="MERGED"/>
+        </Logger>
+
+        <Logger name="org.springframework" level="debug">
+            <AppenderRef ref="SPRING_LOG_FILE"/>
+            <AppenderRef ref="MERGED"/>
+        </Logger>
+
+        <Logger name="org.h2" level="debug">
+            <AppenderRef ref="MERGED"/>
+        </Logger>
+
+        <Root/>
+    </Loggers>
+</Configuration>

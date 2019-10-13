@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+    <batch:job id="foo-bar-job">
+        <batch:step id="foo-bar-chunk-step" next="foo-bar-tasklet-step">
+            <batch:tasklet>
+                <batch:chunk commit-interval="100" reader="fooBarReader" processor="fooBarProcessor" writer="fooBarWriter"/>
+                <batch:listeners>
+                    <batch:listener ref="fooBarListener"/>
+                </batch:listeners>
+            </batch:tasklet>
+        </batch:step>
+        <batch:step id="foo-bar-tasklet-step">
+            <batch:tasklet ref="foo-bar-tasklet">
+                <batch:listeners>
+                    <batch:listener ref="fooBarListener"/>
+                </batch:listeners>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+
+    <bean id="fooBarReader" class="io.tastypenguinbacon.foobar.batch.chunk.FooBarItemReader"/>
+    <bean id="fooBarProcessor" class="io.tastypenguinbacon.foobar.batch.chunk.FooBarItemProcessor"/>
+    <bean id="fooBarWriter" class="io.tastypenguinbacon.foobar.batch.chunk.FooBarItemWriter"/>
+    <bean id="fooBarListener" class="io.tastypenguinbacon.foobar.batch.listener.FooBarStepListener"/>
+
+    <bean id="foo-bar-tasklet" class="io.tastypenguinbacon.foobar.batch.tasklet.FooBarTasklet"/>
+</beans>
