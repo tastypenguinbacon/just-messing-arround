@@ -13,11 +13,10 @@ def gols(x):
     while True:
         yield x
         x = convolve2d(x, conv_mask, mode='same')
-        alive = np.logical_or(x == 3, np.logical_and(x >= 11, x <= 12))
-        x[alive] = 1
-        x[~alive] = 0
+        alive = np.logical_or(x == 3, np.logical_or(x == 11, x == 12))
+        x[alive], x[~alive] = 1, 0
 
-width, height = 64, 64
+width, height = 256, 256
 x = np.random.randint(2, size=width*height, dtype=np.int8).reshape((height, width))
 
 fig = plt.figure()
@@ -30,5 +29,5 @@ def animate(i):
     current_state = next(steps)
     ax1.imshow(current_state, cmap='gray', vmin=0, vmax=1)
 
-anim = animation.FuncAnimation(fig, animate, interval=100)
+anim = animation.FuncAnimation(fig, animate, interval=50)
 plt.show()
